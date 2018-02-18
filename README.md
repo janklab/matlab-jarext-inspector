@@ -1,11 +1,11 @@
 matlab-jarext-inspector
 =========================
 
-List Matlab's bundled third-party Java libraries and their version info.
+Lists Matlab's bundled third-party Java libraries and their version info.
 
 Matlab comes bundled with many third-party Java libraries. If you're writing Matlab/Java code, it's useful to know which libraries are bundled with Matlab and which versions they are, so you can determine compatibility with your custom Java code and third-party libraries you want to pull in.
 
-This program inspects Matlab to determine which Java libraries it includes, extracts their metadata them to see what version etc they are, and checks them against the Maven Central Repo to see where they're available.
+This program inspects Matlab to determine which Java libraries it includes, extracts their metadata to see what version etc they are, and checks them against the Maven Central Repo to see where they're available.
 
 The project home is [matlab-jarext-inspector on GitHub](https://github.com/apjanke/matlab-jarext-inspector).
 
