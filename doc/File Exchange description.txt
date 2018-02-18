@@ -4,4 +4,4 @@ Matlab comes bundled with many third-party Java libraries. If you're writing Mat
 
 This program inspects Matlab to determine which Java libraries it includes, extracts their metadata to see what version etc they are, and checks them against the Maven Central Repo to see where they're available.
 
-The project home is <a href="https://github.com/apjanke/matlab-jarext-inspector">matlab-jarext-inspector on GitHub</a>.
+The project home is https://github.com/apjanke/matlab-jarext-inspector.
