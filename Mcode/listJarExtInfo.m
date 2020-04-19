@@ -82,6 +82,16 @@ for iFile = 1:numel(files)
     SpecVer{iJar} = getAttrib(attr, 'specification-version');
     SpecVendor{iJar} = getAttrib(attr, 'specification-vendor');
     
+    % Check our known SHAs
+    refShas = knownShas;
+    [tf,loc] = ismember(Sha1{iJar}, refShas.Sha1);
+    if tf
+      refInfo = table2struct(refShas(loc,:));
+      ImplTitle{iJar} = refInfo.Title;
+      ImplVendor{iJar} = refInfo.Vendor;
+      ImplVer{iJar} = refInfo.Version;
+    end
+    
     % Search Maven Central for more info
     mvn = mavenClient.searchBySha1(Sha1{iJar});
     if mvn.response.numFound == 0
@@ -127,7 +137,6 @@ for iFile = 1:numel(files)
             MavenRecentestVer{iJar} = mostRecent.v;
             MavenRecentestDate{iJar} = datestr(mostRecent.timestamp, 'yyyy-mm-dd');
         end
-            
     end
     
     Title{iJar} = firstNonEmptyStr(BundleName{iJar}, ImplTitle{iJar}, ...
@@ -235,4 +244,31 @@ if condition
 else
     out = elseValue;
 end
+end
+
+function out = knownShas()
+% These are SHA1s that I assembled manually by downloading the distributions and
+% running "shasum -a 1" on their JARs.
+out = cell2table({
+  '1136d197e2755bbde296ceee217ec5fe2917477b', 'Apache Xerces-J', 'Apache', ...
+    '2.9.1' 'xercesImpl.jar'
+  '90b215f48fe42776c8c7f6e3509ec54e84fd65ef', 'Apache Xerces-J', 'Apache', ...
+    '2.9.1' 'xml-apis.jar'
+  '9161654d2afe7f9063455f02ccca8e4ec2787222', 'Apache Xerces-J', 'Apache', ...
+    '2.10.0' 'xercesImpl.jar'
+  '3789d9fada2d3d458c4ba2de349d48780f381ee3', 'Apache Xerces-J', 'Apache', ...
+    '2.10.0' 'xml-apis.jar'
+  '9bb329db1cfc4e22462c9d6b43a8432f5850e92c', 'Apache Xerces-J', 'Apache', ...
+    '2.11.0' 'xercesImpl.jar'
+  '3789d9fada2d3d458c4ba2de349d48780f381ee3', 'Apache Xerces-J', 'Apache', ...
+    '2.11.0' 'xml-apis.jar'
+  'f02c844149fd306601f20e0b34853a670bef7fa2', 'Apache Xerces-J', 'Apache', ...
+    '2.12.0' 'xercesImpl.jar'
+  '3789d9fada2d3d458c4ba2de349d48780f381ee3', 'Apache Xerces-J', 'Apache', ...
+    '2.12.0' 'xml-apis.jar'
+  '3a206b25679f598a03374afd4e0410d8849b088b', 'Apache Xerces-J', 'Apache', ...
+    '2.12.0' 'xercesImpl.jar'
+  '3789d9fada2d3d458c4ba2de349d48780f381ee3', 'Apache Xerces-J', 'Apache', ...
+    '2.12.0' 'xml-apis.jar'
+  }, 'VariableNames', {'Sha1', 'Title', 'Vendor', 'Version', 'File'});
 end
