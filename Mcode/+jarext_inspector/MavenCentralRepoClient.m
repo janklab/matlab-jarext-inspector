@@ -7,12 +7,18 @@ classdef MavenCentralRepoClient
     end
     
     methods
+        
+        function out = weboptions(this)
+            out = weboptions('Timeout', 60);
+        end
+        
         function out = searchBySha1(this, sha1)
             %SEARCHBYSHA1 Search the repo for files matching a SHA1 digest
             rslt = webread([this.mavenSolrEndpoint '/select'],...
                 'q', sprintf('1:"%s"', sha1), ...
                 'rows', num2str(this.numResults), ...
-                'wt', 'json');
+                'wt', 'json', ...
+                this.weboptions);
             out = rslt;
         end
         
@@ -106,7 +112,8 @@ classdef MavenCentralRepoClient
             out = webread([this.mavenSolrEndpoint '/select'], ...
                 'q', queryStr, ...
                 serviceArgs{:}, ...
-                'wt', 'json');
+                'wt', 'json', ...
+                this.weboptions);
         end
     end
 end
