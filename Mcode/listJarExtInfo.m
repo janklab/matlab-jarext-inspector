@@ -1,7 +1,7 @@
 function [out,fullResults] = listJarExtInfo
-%LISTJAREXTINFO Get info about the "external" JARs included with Matlab
+%LISTJAREXTINFO Get info about the "external" JARs included with Matlab.
 %
-% [out,fullResults] = jl.mlintrospect.listJarExtInfo
+% [out,fullResults] = listJarExtInfo
 %
 % Lists info about all the external (third-party) Java library JARs bundled
 % with this distribution of Matlab. This can be used to assess
@@ -22,14 +22,19 @@ function [out,fullResults] = listJarExtInfo
 %   * SpecVer - the specification version
 %   * BundleName  - the bundle name
 % 
-% Returns a table.
+% Returns a table. Also returns fullResults, a table with even more
+% columns, whose format is not stable.
 %
 % Examples:
 % 
 % jarInfo = listJarExtInfo;
-% fprintf('Found %d JAR libs\n', size(jarInfo,1));
-% % Then open your Workspace view and double-click the jarInfo variable to view
-% % it as a table
+%
+% jarInfoXlsxFile = sprintf('jarexts-R%s.xlsx', version('-release'));
+% writetable(jarInfo, jarInfoXlsxFile);
+%
+% % Or view it in Matlab's Workspace widget
+%
+% See also: CREATEJAREXTREPORT, JAVACLASSPATH
 
 mavenClient = jarext_inspector.MavenCentralRepoClient;
 
